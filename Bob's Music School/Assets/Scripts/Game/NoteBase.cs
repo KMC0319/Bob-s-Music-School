@@ -1,0 +1,51 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Game {
+    public abstract class NoteBase : MonoBehaviour {
+        [SerializeField] protected ENoteGenre genre;
+        [SerializeField] protected List<ENoteTag> tagList = new List<ENoteTag>();
+        private float remainingTime;
+        private float speed; //一秒で移動する距離
+        private readonly float allowableRange = 1f; //前後合わせた許容範囲
+        private bool isActive;
+
+        public ENoteGenre Genre => genre;
+        public List<ENoteTag> TagList => tagList;
+        public abstract ENoteType Type { get; }
+
+        private void Update() {
+            if (isActive) Move();
+        }
+
+        public void Init(float time, Vector3 borderPosition) {
+            remainingTime = time;
+            SetSpeed(borderPosition);
+        }
+
+        public void Init(int barCount, float tempo, Vector3 borderPosition) {
+            remainingTime = barCount * 60f / (tempo / 4f); //残り時間 ＝ 残り小節数 * 一小節の時間
+            SetSpeed(borderPosition);
+        }
+
+        /// <summary>
+        /// 初期スピード設定
+        /// </summary>
+        protected void SetSpeed(Vector3 borderPosition) {
+            var distance = transform.position.x - borderPosition.x;
+            speed = distance / remainingTime;
+            isActive = true;
+        }
+
+        /// <summary>
+        /// とりあえず右から左に流れる
+        /// </summary>
+        protected virtual void Move() {
+            remainingTime -= Time.deltaTime;
+            transform.position = new Vector3(transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
+            if(transform.position.x < -10) Destroy(gameObject);
+        }
+
+        public bool CanHold => -(allowableRange / 2f) <= remainingTime && remainingTime <= (allowableRange / 2f);
+    }
+}
