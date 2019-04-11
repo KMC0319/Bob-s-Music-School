@@ -12,6 +12,10 @@ namespace test {
         [SerializeField] private int barCount;
         [SerializeField] private float tempo;
         [SerializeField] private Player player;
+        [SerializeField] private SoundPlayer soundPlayer;
+        [SerializeField] private AudioClip[] melodys;
+        [SerializeField] private AudioClip[] rhythms;
+        [SerializeField] private AudioClip[] fxs;
         private bool isGameStart;
         private List<NoteBase> noteBases = new List<NoteBase>();
 
@@ -29,28 +33,28 @@ namespace test {
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
                 var obj = noteFactory.Create(ENoteType.Melody);
                 obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
-                obj.Init(barCount, tempo, border.transform.position);
+                obj.Init(melodys[Random.Range(0, melodys.Length)], barCount, tempo, border.transform.position);
                 noteBases.Add(obj);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2)) {
                 var obj = noteFactory.Create(ENoteType.Rhythm);
                 obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
-                obj.Init(barCount, tempo, border.transform.position);
+                obj.Init(rhythms[Random.Range(0, rhythms.Length)], barCount, tempo, border.transform.position);
                 noteBases.Add(obj);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha3)) {
                 var obj = noteFactory.Create(ENoteType.Fx);
                 obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
-                obj.Init(barCount, tempo, border.transform.position);
+                obj.Init(fxs[Random.Range(0, fxs.Length)], barCount, tempo, border.transform.position);
                 noteBases.Add(obj);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4)) {
                 var obj = noteFactory.Create(ENoteType.Lyrics);
                 obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
-                obj.Init(barCount, tempo, border.transform.position);
+                obj.Init(null, barCount, tempo, border.transform.position);
                 noteBases.Add(obj);
             }
         }
@@ -58,6 +62,7 @@ namespace test {
         private void GameStart() {
             isGameStart = true;
             player.GameStart();
+            soundPlayer.GameStart(tempo);
         }
 
         private void CheckHold(int index) {

@@ -9,21 +9,25 @@ namespace Game {
         private float speed; //一秒で移動する距離
         private readonly float allowableRange = 1f; //前後合わせた許容範囲
         private bool isActive;
+        private AudioClip clip;
 
         public ENoteGenre Genre => genre;
         public List<ENoteTag> TagList => tagList;
         public abstract ENoteType Type { get; }
+        public AudioClip Clip => clip;
 
         private void Update() {
             if (isActive) Move();
         }
 
-        public void Init(float time, Vector3 borderPosition) {
+        public void Init(AudioClip _clip ,float time, Vector3 borderPosition) {
+            clip = _clip;
             remainingTime = time;
             SetSpeed(borderPosition);
         }
 
-        public void Init(int barCount, float tempo, Vector3 borderPosition) {
+        public void Init(AudioClip _clip, int barCount, float tempo, Vector3 borderPosition) {
+            clip = _clip;
             remainingTime = barCount * 60f / (tempo / 4f); //残り時間 ＝ 残り小節数 * 一小節の時間
             SetSpeed(borderPosition);
         }
