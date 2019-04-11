@@ -523,11 +523,12 @@ MonoBehaviour:
   player: {fileID: 2060093709}
   soundPlayer: {fileID: 625522559}
   melodys:
-  - {fileID: 8300000, guid: 2889cd124bae71a4f923c7db8aabe9cb, type: 3}
-  rhythms:
   - {fileID: 8300000, guid: e68db79076866994ea9a71fef0854de5, type: 3}
-  fxs:
+  rhythms:
   - {fileID: 8300000, guid: d3588082a68bcac468567e8e7fff1aa3, type: 3}
+  - {fileID: 8300000, guid: 2889cd124bae71a4f923c7db8aabe9cb, type: 3}
+  fxs:
+  - {fileID: 8300000, guid: 6b69f1b8b2aa05d40ab0dfd35e548a95, type: 3}
 --- !u!4 &532445589
 Transform:
   m_ObjectHideFlags: 0
@@ -1274,7 +1275,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e68db79076866994ea9a71fef0854de5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d3588082a68bcac468567e8e7fff1aa3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1

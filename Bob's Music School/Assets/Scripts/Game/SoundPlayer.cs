@@ -52,6 +52,7 @@ namespace Game {
 			}*/
 			if (!bgm.isPlaying) bgm.Play();
 			foreach (var audioSource in sounds.Where(i=>i.clip!=null)) {
+				Debug.Log("a");
 				if (!audioSource.isPlaying) audioSource.Play();
 			}
 		}
