@@ -5,27 +5,25 @@ using UniRx;
 using UnityEngine;
 
 namespace Game {
+	/// <summary>
+	/// 小節ごとにBGM・保持ノーツの再生命令をするクラス
+	/// </summary>
 	public class SoundPlayer : MonoBehaviour {
-		private AudioSource bgm;
-		private AudioSource[] sounds;
+		private Bgm bgm;
 		private float tempo;
 		private bool isGameStart;
 		private readonly Subject<Unit> barStream = new Subject<Unit>();
 		public IObservable<Unit> OnBarStart => barStream;
 		
 		private void Start () {
-			bgm = GetComponent<AudioSource>();
-			sounds = GetComponentsInChildren<AudioSource>().Skip(1).ToArray();
+			bgm = GetComponent<Bgm>();
 		}
 
 		public void GameStart(float _tempo) {
 			isGameStart = true;
 			tempo = _tempo;
+			bgm.SetBgm();
 			bgm.Play();
-			foreach (var audioSource in sounds) {
-				audioSource.clip = null;
-			}
-
 			StartCoroutine(SoundLoop());
 		}
 
@@ -45,15 +43,11 @@ namespace Game {
 			}
 		}
 
-		public void SoundStart() {/*
-			bgm.Stop();
-			foreach (var audioSource in sounds) {
-				audioSource.Stop();
-			}*/
-			if (!bgm.isPlaying) bgm.Play();
-			foreach (var audioSource in sounds.Where(i=>i.clip!=null)) {
-				Debug.Log("a");
-				if (!audioSource.isPlaying) audioSource.Play();
+		public void SoundStart(HoldNote[] holdNotes) {
+			bgm.SetBgm();
+			bgm.Play();
+			foreach (var holdNote in holdNotes.Where(i=>i != null)) {
+				holdNote.Play();
 			}
 		}
 	}

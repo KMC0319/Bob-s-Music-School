@@ -5,6 +5,10 @@ using UniRx;
 using UnityEngine;
 
 namespace test {
+    /// <summary>
+    /// ゲームシーン全体を管轄するテスト用クラス
+    /// ゲームスタート・ノーツの生成命令・ノーツのヒット確認等を行っている
+    /// </summary>
     public class TestGameController : MonoBehaviour {
         [SerializeField] private NoteFactory noteFactory;
         [SerializeField] private Vector3[] startPositions;
@@ -13,9 +17,9 @@ namespace test {
         [SerializeField] private float tempo;
         [SerializeField] private Player player;
         [SerializeField] private SoundPlayer soundPlayer;
-        [SerializeField] private AudioClip[] melodys;
-        [SerializeField] private AudioClip[] rhythms;
-        [SerializeField] private AudioClip[] fxs;
+        [SerializeField] private SoundStatus[] melodys;
+        [SerializeField] private SoundStatus[] rhythms;
+        [SerializeField] private SoundStatus[] fxs;
         private bool isGameStart;
         private List<NoteBase> noteBases = new List<NoteBase>();
 
@@ -52,10 +56,7 @@ namespace test {
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4)) {
-                var obj = noteFactory.Create(ENoteType.Lyrics);
-                obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
-                obj.Init(null, barCount, tempo, border.transform.position);
-                noteBases.Add(obj);
+                Debug.Log("kashi");
             }
         }
 

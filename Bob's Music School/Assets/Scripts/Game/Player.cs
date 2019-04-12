@@ -4,6 +4,10 @@ using UniRx;
 using UnityEngine;
 
 namespace Game {
+    /// <summary>
+    /// プレイヤーが操作すると動く機能が書いてあるクラス
+    /// ノーツの保持・破棄・ミュートの機能がある
+    /// </summary>
     public class Player : MonoBehaviour {
         [SerializeField] private GameObject itemRoot;
         [SerializeField] private GameObject holdObject;
@@ -31,21 +35,20 @@ namespace Game {
 
         private void Update() {
             if (!isGameStart) return;
-            if (Input.GetKeyDown(KeyCode.Z)) {
-                onNotesButtonDown.OnNext(0);
-            }
+            if (Input.GetKeyDown(KeyCode.Z)) onNotesButtonDown.OnNext(0);
+            if (Input.GetKeyDown(KeyCode.X)) onNotesButtonDown.OnNext(1);
+            if (Input.GetKeyDown(KeyCode.C)) onNotesButtonDown.OnNext(2);
+            if (Input.GetKeyDown(KeyCode.V)) onNotesButtonDown.OnNext(3);
 
-            if (Input.GetKeyDown(KeyCode.X)) {
-                onNotesButtonDown.OnNext(1);
-            }
+            if (Input.GetKeyDown(KeyCode.A)) Delete(0);
+            if (Input.GetKeyDown(KeyCode.S)) Delete(1);
+            if (Input.GetKeyDown(KeyCode.D)) Delete(2);
+            if (Input.GetKeyDown(KeyCode.F)) Delete(3);
 
-            if (Input.GetKeyDown(KeyCode.C)) {
-                onNotesButtonDown.OnNext(2);
-            }
-
-            if (Input.GetKeyDown(KeyCode.V)) {
-                onNotesButtonDown.OnNext(3);
-            }
+            if (Input.GetKeyDown(KeyCode.Q)) Mute(0);
+            if (Input.GetKeyDown(KeyCode.W)) Mute(1);
+            if (Input.GetKeyDown(KeyCode.E)) Mute(2);
+            if (Input.GetKeyDown(KeyCode.R)) Mute(3);
         }
 
         public void GameStart() {
@@ -53,20 +56,35 @@ namespace Game {
         }
 
         public void Hold(NoteBase noteBase, int index) {
-            var obj = Instantiate(holdObject);
-            obj.transform.position = holdNotesBacks[index].transform.position;
+            //保持ノーツの生成
+            var obj = Instantiate(holdObject,
+                holdNotesBacks[index].transform.position,
+                holdNotesBacks[index].transform.rotation);
+            obj.transform.parent = holdNotesBacks[index].transform;
+            //保持ノーツの形を流れていたノーツと合わせる
             obj.GetComponent<MeshFilter>().mesh = noteBase.GetComponent<MeshFilter>().mesh;
+            //スクリプトのアタッチ・初期化
             var script = obj.AddComponent<HoldNote>();
-            script.Init(noteBase);
+            script.Init(noteBase, audioSources[index]);
+            audioSources[index].mute = false;
+            //既存の保持ノーツの上書き
+            if (holdNotes[index] != null) holdNotes[index].Delete();
             holdNotes[index] = script;
         }
 
+        private void Delete(int index) {
+            if (holdNotes[index] == null) return;
+            holdNotes[index].Delete();
+        }
+
+        private void Mute(int index) {
+            if (holdNotes[index] == null) return;
+            audioSources[index].mute = !audioSources[index].mute;
+            holdNotes[index].GetComponent<MeshRenderer>().material.color = audioSources[index].mute ? Color.yellow : Color.white;
+        }
+
         private void BarStart() {
-            for (int i = 0; i < audioSources.Length; i++) {
-                if(holdNotes[i] == null) continue;
-                audioSources[i].clip = holdNotes[i].Clip;
-            }
-            soundPlayer.SoundStart();
+            soundPlayer.SoundStart(holdNotes);
         }
     }
 }

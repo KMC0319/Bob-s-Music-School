@@ -2,6 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game {
+    /// <summary>
+    /// ノーツの基底クラス
+    /// 生成時に判定までの残り時間が発生する
+    /// ノーツの情報（sound等）は全てSoundStatusが持っている
+    /// </summary>
     public abstract class NoteBase : MonoBehaviour {
         [SerializeField] protected ENoteGenre genre;
         [SerializeField] protected List<ENoteTag> tagList = new List<ENoteTag>();
@@ -9,25 +14,24 @@ namespace Game {
         private float speed; //一秒で移動する距離
         private readonly float allowableRange = 1f; //前後合わせた許容範囲
         private bool isActive;
-        private AudioClip clip;
 
         public ENoteGenre Genre => genre;
         public List<ENoteTag> TagList => tagList;
         public abstract ENoteType Type { get; }
-        public AudioClip Clip => clip;
+        public SoundStatus SoundStatus { get; private set; }
 
         private void Update() {
             if (isActive) Move();
         }
 
-        public void Init(AudioClip _clip ,float time, Vector3 borderPosition) {
-            clip = _clip;
+        public void Init(SoundStatus soundStatus, float time, Vector3 borderPosition) {
+            SoundStatus = soundStatus;
             remainingTime = time;
             SetSpeed(borderPosition);
         }
 
-        public void Init(AudioClip _clip, int barCount, float tempo, Vector3 borderPosition) {
-            clip = _clip;
+        public void Init(SoundStatus soundStatus, int barCount, float tempo, Vector3 borderPosition) {
+            SoundStatus = soundStatus;
             remainingTime = barCount * 60f / (tempo / 4f); //残り時間 ＝ 残り小節数 * 一小節の時間
             SetSpeed(borderPosition);
         }
