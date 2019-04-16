@@ -22,9 +22,11 @@ namespace test {
         [SerializeField] private SoundStatus[] fxs;
         private bool isGameStart;
         private List<NoteBase> noteBases = new List<NoteBase>();
+        private int currentLane;
 
         private void Awake() {
             player.OnNotesButtonDown.Subscribe(CheckHold);
+            player.OnMoveButtonDown.Subscribe(Move);
         }
 
         private void Update() {
@@ -56,7 +58,10 @@ namespace test {
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4)) {
-                Debug.Log("kashi");
+                var obj = noteFactory.Create(ENoteType.Lyrics);
+                obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
+                obj.Init(fxs[Random.Range(0, fxs.Length)], barCount, tempo, border.transform.position);
+                noteBases.Add(obj);
             }
         }
 
@@ -72,6 +77,10 @@ namespace test {
             player.Hold(obj, index);
             noteBases.Remove(obj);
             Destroy(obj.gameObject);
+        }
+
+        private void Move(int num) {
+            currentLane = Mathf.Clamp(currentLane + num, 0, 4);
         }
     }
 }

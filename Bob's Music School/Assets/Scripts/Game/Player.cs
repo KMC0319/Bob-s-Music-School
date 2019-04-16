@@ -17,7 +17,9 @@ namespace Game {
         private AudioSource[] audioSources;
         private SoundPlayer soundPlayer;
         private readonly Subject<int> onNotesButtonDown = new Subject<int>();
+        private readonly Subject<int> onMoveButtonDown = new Subject<int>();
         public IObservable<int> OnNotesButtonDown => onNotesButtonDown;
+        public IObservable<int> OnMoveButtonDown => onMoveButtonDown;
         private bool isGameStart;
 
         private void Start() {
@@ -35,20 +37,27 @@ namespace Game {
 
         private void Update() {
             if (!isGameStart) return;
+            if (Input.GetKeyDown(KeyCode.UpArrow)) onMoveButtonDown.OnNext(-1);
+            if (Input.GetKeyDown(KeyCode.DownArrow)) onMoveButtonDown.OnNext(1);
+
             if (Input.GetKeyDown(KeyCode.Z)) onNotesButtonDown.OnNext(0);
             if (Input.GetKeyDown(KeyCode.X)) onNotesButtonDown.OnNext(1);
             if (Input.GetKeyDown(KeyCode.C)) onNotesButtonDown.OnNext(2);
             if (Input.GetKeyDown(KeyCode.V)) onNotesButtonDown.OnNext(3);
 
-            if (Input.GetKeyDown(KeyCode.A)) Delete(0);
-            if (Input.GetKeyDown(KeyCode.S)) Delete(1);
-            if (Input.GetKeyDown(KeyCode.D)) Delete(2);
-            if (Input.GetKeyDown(KeyCode.F)) Delete(3);
+            if (Input.GetKey(KeyCode.RightArrow)) {
+                if (Input.GetKeyDown(KeyCode.A)) Delete(0);
+                if (Input.GetKeyDown(KeyCode.S)) Delete(1);
+                if (Input.GetKeyDown(KeyCode.D)) Delete(2);
+                if (Input.GetKeyDown(KeyCode.F)) Delete(3);
+            }
 
-            if (Input.GetKeyDown(KeyCode.Q)) Mute(0);
-            if (Input.GetKeyDown(KeyCode.W)) Mute(1);
-            if (Input.GetKeyDown(KeyCode.E)) Mute(2);
-            if (Input.GetKeyDown(KeyCode.R)) Mute(3);
+            if (Input.GetKey(KeyCode.LeftArrow)) {
+                if (Input.GetKeyDown(KeyCode.Q)) Mute(0);
+                if (Input.GetKeyDown(KeyCode.W)) Mute(1);
+                if (Input.GetKeyDown(KeyCode.E)) Mute(2);
+                if (Input.GetKeyDown(KeyCode.R)) Mute(3);
+            }
         }
 
         public void GameStart() {
