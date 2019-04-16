@@ -20,6 +20,7 @@ namespace Game {
         private readonly Subject<int> onMoveButtonDown = new Subject<int>();
         public IObservable<int> OnNotesButtonDown => onNotesButtonDown;
         public IObservable<int> OnMoveButtonDown => onMoveButtonDown;
+        public HoldNote[] HoldNotes => holdNotes;
         private bool isGameStart;
 
         private void Start() {
@@ -40,23 +41,21 @@ namespace Game {
             if (Input.GetKeyDown(KeyCode.UpArrow)) onMoveButtonDown.OnNext(-1);
             if (Input.GetKeyDown(KeyCode.DownArrow)) onMoveButtonDown.OnNext(1);
 
-            if (Input.GetKeyDown(KeyCode.Z)) onNotesButtonDown.OnNext(0);
-            if (Input.GetKeyDown(KeyCode.X)) onNotesButtonDown.OnNext(1);
-            if (Input.GetKeyDown(KeyCode.C)) onNotesButtonDown.OnNext(2);
-            if (Input.GetKeyDown(KeyCode.V)) onNotesButtonDown.OnNext(3);
-
             if (Input.GetKey(KeyCode.RightArrow)) {
-                if (Input.GetKeyDown(KeyCode.Z)) Delete(0);
-                if (Input.GetKeyDown(KeyCode.X)) Delete(1);
-                if (Input.GetKeyDown(KeyCode.C)) Delete(2);
-                if (Input.GetKeyDown(KeyCode.V)) Delete(3);
-            }
-
-            if (Input.GetKey(KeyCode.LeftArrow)) {
                 if (Input.GetKeyDown(KeyCode.Z)) Mute(0);
                 if (Input.GetKeyDown(KeyCode.X)) Mute(1);
                 if (Input.GetKeyDown(KeyCode.C)) Mute(2);
                 if (Input.GetKeyDown(KeyCode.V)) Mute(3);
+            } else if (Input.GetKey(KeyCode.LeftArrow)) {
+                if (Input.GetKeyDown(KeyCode.Z)) Delete(0);
+                if (Input.GetKeyDown(KeyCode.X)) Delete(1);
+                if (Input.GetKeyDown(KeyCode.C)) Delete(2);
+                if (Input.GetKeyDown(KeyCode.V)) Delete(3);
+            } else {
+                if (Input.GetKeyDown(KeyCode.Z)) onNotesButtonDown.OnNext(0);
+                if (Input.GetKeyDown(KeyCode.X)) onNotesButtonDown.OnNext(1);
+                if (Input.GetKeyDown(KeyCode.C)) onNotesButtonDown.OnNext(2);
+                if (Input.GetKeyDown(KeyCode.V)) onNotesButtonDown.OnNext(3);
             }
         }
 

@@ -8,18 +8,19 @@ namespace Game {
     public class HoldNote : MonoBehaviour {
         private ENoteType type;
         private AudioSource source;
-        private SoundStatus soundStatus;
+
+        public SoundStatus SoundStatus { get; private set; }
         //public bool DeleteFlg { get; private set; }
 
         public void Init(NoteBase noteBase, AudioSource audioSource) {
             type = noteBase.Type;
             source = audioSource;
-            soundStatus = noteBase.SoundStatus;
-            source.clip = soundStatus.Clip;
+            SoundStatus = noteBase.SoundStatus;
+            source.clip = SoundStatus.Clip;
         }
 
         public void Play() {
-            soundStatus.Play(source);
+            SoundStatus.Play(source);
         }
 
         public void Delete() {

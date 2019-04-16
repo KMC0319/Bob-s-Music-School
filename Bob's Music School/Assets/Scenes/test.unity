@@ -381,8 +381,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "0:GameStart\n1-4:Create Note(Melody,Rhythm,Fx,Lyric)\nz-v:Hold Note\n\u2192&(z-v):Delete
-    Note\n\u2190&(z-v):Mute Note"
+  m_Text: "0:GameStart\n1-4:Create Note(Melody,Rhythm,Fx,Lyric)\nz-v:Hold Note\n\u2190&(z-v):Delete
+    Note\n\u2192&(z-v):Mute Note"
 --- !u!222 &236811096
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1158,7 +1158,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 979447705}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7, y: 1.25, z: 0}
+  m_LocalPosition: {x: -6, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
