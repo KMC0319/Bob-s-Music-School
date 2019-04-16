@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,26 +15,30 @@ namespace Game {
         private float speed; //一秒で移動する距離
         private readonly float allowableRange = 1f; //前後合わせた許容範囲
         private bool isActive;
+        private int laneNo;
 
         public ENoteGenre Genre => genre;
         public List<ENoteTag> TagList => tagList;
         public abstract ENoteType Type { get; }
         public SoundStatus SoundStatus { get; private set; }
+        public int LaneNo => laneNo;
 
         private void Update() {
             if (isActive) Move();
         }
 
-        public void Init(SoundStatus soundStatus, float time, Vector3 borderPosition) {
+        public void Init(SoundStatus soundStatus, float time, Vector3 borderPosition, Vector3[] startPostions) {
             SoundStatus = soundStatus;
             remainingTime = time;
             SetSpeed(borderPosition);
+            laneNo = Array.IndexOf(startPostions, transform.position);
         }
 
-        public void Init(SoundStatus soundStatus, int barCount, float tempo, Vector3 borderPosition) {
+        public void Init(SoundStatus soundStatus, int barCount, float tempo, Vector3 borderPosition, Vector3[] startPostions) {
             SoundStatus = soundStatus;
             remainingTime = barCount * 60f / (tempo / 4f); //残り時間 ＝ 残り小節数 * 一小節の時間
             SetSpeed(borderPosition);
+            laneNo = Array.IndexOf(startPostions, transform.position);
         }
 
         /// <summary>

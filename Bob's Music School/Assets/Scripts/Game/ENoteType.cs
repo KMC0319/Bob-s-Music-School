@@ -1,5 +1,5 @@
 namespace Game {
     public enum ENoteType {
-        Melody,Rhythm,Fx,Lyrics
+        Melody,Rhythm,Fx,Bass
     }
 }

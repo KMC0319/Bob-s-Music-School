@@ -22,6 +22,8 @@ namespace test {
         [SerializeField] private SoundStatus[] melodys;
         [SerializeField] private SoundStatus[] rhythms;
         [SerializeField] private SoundStatus[] fxs;
+        [SerializeField] private SoundStatus[] basses;
+        [SerializeField] private GameObject currentLaneObj;
         private bool isGameStart;
         private List<NoteBase> noteBases = new List<NoteBase>();
         private int currentLane;
@@ -41,28 +43,28 @@ namespace test {
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
                 var obj = noteFactory.Create(ENoteType.Melody);
                 obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
-                obj.Init(melodys[Random.Range(0, melodys.Length)], barCount, tempo, border.transform.position);
+                obj.Init(melodys[Random.Range(0, melodys.Length)], barCount, tempo, border.transform.position, startPositions);
                 noteBases.Add(obj);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2)) {
                 var obj = noteFactory.Create(ENoteType.Rhythm);
                 obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
-                obj.Init(rhythms[Random.Range(0, rhythms.Length)], barCount, tempo, border.transform.position);
+                obj.Init(rhythms[Random.Range(0, rhythms.Length)], barCount, tempo, border.transform.position, startPositions);
                 noteBases.Add(obj);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha3)) {
                 var obj = noteFactory.Create(ENoteType.Fx);
                 obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
-                obj.Init(fxs[Random.Range(0, fxs.Length)], barCount, tempo, border.transform.position);
+                obj.Init(fxs[Random.Range(0, fxs.Length)], barCount, tempo, border.transform.position, startPositions);
                 noteBases.Add(obj);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4)) {
-                var obj = noteFactory.Create(ENoteType.Lyrics);
+                var obj = noteFactory.Create(ENoteType.Bass);
                 obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
-                obj.Init(fxs[Random.Range(0, fxs.Length)], barCount, tempo, border.transform.position);
+                obj.Init(basses[Random.Range(0, basses.Length)], barCount, tempo, border.transform.position, startPositions);
                 noteBases.Add(obj);
             }
         }
@@ -76,15 +78,16 @@ namespace test {
         }
 
         private void CheckHold(int index) {
-            if (noteBases.All(i => !i.CanHold)) return;
-            var obj = noteBases.First(i => i.CanHold);
+            if (noteBases.All(i => !i.CanHold || currentLane != i.LaneNo)) return;
+            var obj = noteBases.First(i => i.CanHold && i.LaneNo == currentLane);
             player.Hold(obj, index);
             noteBases.Remove(obj);
             Destroy(obj.gameObject);
         }
-        
+
         private void Move(int num) {
             currentLane = Mathf.Clamp(currentLane + num, 0, 4);
+            currentLaneObj.transform.position = startPositions[currentLane] + new Vector3(-16, 0, 0);
         }
 
         private void RandomCreate() {
@@ -93,20 +96,21 @@ namespace test {
             obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
             switch (type) {
                 case ENoteType.Melody:
-                    obj.Init(melodys[Random.Range(0, melodys.Length)], barCount, tempo, border.transform.position);
+                    obj.Init(melodys[Random.Range(0, melodys.Length)], barCount, tempo, border.transform.position, startPositions);
                     break;
                 case ENoteType.Rhythm:
-                    obj.Init(rhythms[Random.Range(0, rhythms.Length)], barCount, tempo, border.transform.position);
+                    obj.Init(rhythms[Random.Range(0, rhythms.Length)], barCount, tempo, border.transform.position, startPositions);
                     break;
                 case ENoteType.Fx:
-                    obj.Init(fxs[Random.Range(0, fxs.Length)], barCount, tempo, border.transform.position);
+                    obj.Init(fxs[Random.Range(0, fxs.Length)], barCount, tempo, border.transform.position, startPositions);
                     break;
-                case ENoteType.Lyrics:
-                    Debug.Log("kashi");
+                case ENoteType.Bass:
+                    obj.Init(basses[Random.Range(0, basses.Length)], barCount, tempo, border.transform.position, startPositions);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
             noteBases.Add(obj);
         }
     }

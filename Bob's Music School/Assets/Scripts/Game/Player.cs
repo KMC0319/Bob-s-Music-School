@@ -46,17 +46,17 @@ namespace Game {
             if (Input.GetKeyDown(KeyCode.V)) onNotesButtonDown.OnNext(3);
 
             if (Input.GetKey(KeyCode.RightArrow)) {
-                if (Input.GetKeyDown(KeyCode.A)) Delete(0);
-                if (Input.GetKeyDown(KeyCode.S)) Delete(1);
-                if (Input.GetKeyDown(KeyCode.D)) Delete(2);
-                if (Input.GetKeyDown(KeyCode.F)) Delete(3);
+                if (Input.GetKeyDown(KeyCode.Z)) Delete(0);
+                if (Input.GetKeyDown(KeyCode.X)) Delete(1);
+                if (Input.GetKeyDown(KeyCode.C)) Delete(2);
+                if (Input.GetKeyDown(KeyCode.V)) Delete(3);
             }
 
             if (Input.GetKey(KeyCode.LeftArrow)) {
-                if (Input.GetKeyDown(KeyCode.Q)) Mute(0);
-                if (Input.GetKeyDown(KeyCode.W)) Mute(1);
-                if (Input.GetKeyDown(KeyCode.E)) Mute(2);
-                if (Input.GetKeyDown(KeyCode.R)) Mute(3);
+                if (Input.GetKeyDown(KeyCode.Z)) Mute(0);
+                if (Input.GetKeyDown(KeyCode.X)) Mute(1);
+                if (Input.GetKeyDown(KeyCode.C)) Mute(2);
+                if (Input.GetKeyDown(KeyCode.V)) Mute(3);
             }
         }
 
