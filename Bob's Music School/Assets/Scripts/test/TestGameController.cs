@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game;
 using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace test {
     /// <summary>
@@ -64,6 +66,8 @@ namespace test {
             isGameStart = true;
             player.GameStart();
             soundPlayer.GameStart(tempo);
+            Observable.Interval(TimeSpan.FromSeconds(0.5f))
+                .Subscribe(_ => RandomCreate());
         }
 
         private void CheckHold(int index) {
@@ -72,6 +76,29 @@ namespace test {
             player.Hold(obj, index);
             noteBases.Remove(obj);
             Destroy(obj.gameObject);
+        }
+
+        private void RandomCreate() {
+            var type = (ENoteType) Random.Range(0, 3);
+            var obj = noteFactory.Create(type);
+            obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
+            switch (type) {
+                case ENoteType.Melody:
+                    obj.Init(melodys[Random.Range(0, melodys.Length)], barCount, tempo, border.transform.position);
+                    break;
+                case ENoteType.Rhythm:
+                    obj.Init(rhythms[Random.Range(0, rhythms.Length)], barCount, tempo, border.transform.position);
+                    break;
+                case ENoteType.Fx:
+                    obj.Init(fxs[Random.Range(0, fxs.Length)], barCount, tempo, border.transform.position);
+                    break;
+                case ENoteType.Lyrics:
+                    Debug.Log("kashi");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            noteBases.Add(obj);
         }
     }
 }
