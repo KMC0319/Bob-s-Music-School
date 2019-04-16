@@ -51,17 +51,7 @@ namespace test {
 
             if (!isGameStart) return;
             CreateNote();
-            var removeList = new List<NoteBase>();
-            foreach (var noteBase in noteBases) {
-                if (noteBase.transform.position.x < -10) {
-                    removeList.Add(noteBase);
-                    Destroy(noteBase.gameObject);
-                }
-            }
-
-            foreach (var noteBase in removeList) {
-                noteBases.Remove(noteBase);
-            }
+            RemoveNote();
         }
 
         private void GameStart() {
@@ -134,6 +124,20 @@ namespace test {
             obj.Init(clip, barCount, tempo, border.transform.position, startPositions);
             //現在存在しているノーツに追加
             noteBases.Add(obj);
+        }
+
+        private void RemoveNote() {
+            var removeList = new List<NoteBase>();
+            foreach (var noteBase in noteBases) {
+                if (noteBase.transform.position.x < -10) {
+                    removeList.Add(noteBase);
+                    Destroy(noteBase.gameObject);
+                }
+            }
+
+            foreach (var noteBase in removeList) {
+                noteBases.Remove(noteBase);
+            }
         }
     }
 }
