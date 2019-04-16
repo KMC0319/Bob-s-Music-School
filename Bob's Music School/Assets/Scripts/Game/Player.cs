@@ -22,6 +22,7 @@ namespace Game {
         public IObservable<int> OnMoveButtonDown => onMoveButtonDown;
         public HoldNote[] HoldNotes => holdNotes;
         private bool isGameStart;
+        private float axisDeadLine = 0;
 
         private void Start() {
             holdNotesBacks = itemRoot.GetComponentsInChildren<Transform>()
@@ -38,24 +39,24 @@ namespace Game {
 
         private void Update() {
             if (!isGameStart) return;
-            if (Input.GetKeyDown(KeyCode.UpArrow)) onMoveButtonDown.OnNext(-1);
-            if (Input.GetKeyDown(KeyCode.DownArrow)) onMoveButtonDown.OnNext(1);
+            if (Input.GetAxisRaw(EButtonName.Vertical.ToString()) > axisDeadLine) onMoveButtonDown.OnNext(-1);
+            if (Input.GetAxisRaw(EButtonName.Vertical.ToString()) < -axisDeadLine) onMoveButtonDown.OnNext(1);
 
-            if (Input.GetKey(KeyCode.RightArrow)) {
-                if (Input.GetKeyDown(KeyCode.Z)) Mute(0);
-                if (Input.GetKeyDown(KeyCode.X)) Mute(1);
-                if (Input.GetKeyDown(KeyCode.C)) Mute(2);
-                if (Input.GetKeyDown(KeyCode.V)) Mute(3);
-            } else if (Input.GetKey(KeyCode.LeftArrow)) {
-                if (Input.GetKeyDown(KeyCode.Z)) Delete(0);
-                if (Input.GetKeyDown(KeyCode.X)) Delete(1);
-                if (Input.GetKeyDown(KeyCode.C)) Delete(2);
-                if (Input.GetKeyDown(KeyCode.V)) Delete(3);
+            if (Input.GetAxisRaw(EButtonName.Horizontal.ToString()) > axisDeadLine) {
+                if (Input.GetButtonDown(EButtonName.A.ToString())) Mute(0);
+                if (Input.GetButtonDown(EButtonName.B.ToString())) Mute(1);
+                if (Input.GetButtonDown(EButtonName.X.ToString())) Mute(2);
+                if (Input.GetButtonDown(EButtonName.Y.ToString())) Mute(3);
+            } else if (Input.GetAxisRaw(EButtonName.Horizontal.ToString()) < -axisDeadLine) {
+                if (Input.GetButtonDown(EButtonName.A.ToString())) Delete(0);
+                if (Input.GetButtonDown(EButtonName.B.ToString())) Delete(1);
+                if (Input.GetButtonDown(EButtonName.X.ToString())) Delete(2);
+                if (Input.GetButtonDown(EButtonName.Y.ToString())) Delete(3);
             } else {
-                if (Input.GetKeyDown(KeyCode.Z)) onNotesButtonDown.OnNext(0);
-                if (Input.GetKeyDown(KeyCode.X)) onNotesButtonDown.OnNext(1);
-                if (Input.GetKeyDown(KeyCode.C)) onNotesButtonDown.OnNext(2);
-                if (Input.GetKeyDown(KeyCode.V)) onNotesButtonDown.OnNext(3);
+                if (Input.GetButtonDown(EButtonName.A.ToString())) onNotesButtonDown.OnNext(0);
+                if (Input.GetButtonDown(EButtonName.B.ToString())) onNotesButtonDown.OnNext(1);
+                if (Input.GetButtonDown(EButtonName.X.ToString())) onNotesButtonDown.OnNext(2);
+                if (Input.GetButtonDown(EButtonName.Y.ToString())) onNotesButtonDown.OnNext(3);
             }
         }
 

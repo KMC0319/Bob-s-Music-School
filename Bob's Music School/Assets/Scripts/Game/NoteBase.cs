@@ -56,7 +56,6 @@ namespace Game {
         protected virtual void Move() {
             remainingTime -= Time.deltaTime;
             transform.position = new Vector3(transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
-            if(transform.position.x < -10) Destroy(gameObject);
         }
 
         public bool CanHold => -(allowableRange / 2f) <= remainingTime && remainingTime <= (allowableRange / 2f);

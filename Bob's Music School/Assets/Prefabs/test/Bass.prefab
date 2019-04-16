@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23039066675479082}
   - component: {fileID: 114979004346047718}
   m_Layer: 0
-  m_Name: Lyric
+  m_Name: Bass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

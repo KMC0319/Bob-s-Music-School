@@ -28,10 +28,14 @@ namespace test {
         private bool isGameStart;
         private List<NoteBase> noteBases = new List<NoteBase>();
         private int currentLane;
+        private float createInterval => 60f / (tempo / 4f);
+        private float moveInterval = 0.15f;
 
         private void Awake() {
             player.OnNotesButtonDown.Subscribe(CheckHold);
-            player.OnMoveButtonDown.Subscribe(Move);
+            player.OnMoveButtonDown
+                .ThrottleFirst(TimeSpan.FromSeconds(moveInterval))
+                .Subscribe(MoveLane);
             sounds = new[] {
                 new Tuple<ENoteType, SoundStatus[]>(ENoteType.Melody, melodys),
                 new Tuple<ENoteType, SoundStatus[]>(ENoteType.Rhythm, rhythms),
@@ -46,7 +50,44 @@ namespace test {
             }
 
             if (!isGameStart) return;
+            CreateNote();
+            var removeList = new List<NoteBase>();
+            foreach (var noteBase in noteBases) {
+                if (noteBase.transform.position.x < -10) {
+                    removeList.Add(noteBase);
+                    Destroy(noteBase.gameObject);
+                }
+            }
 
+            foreach (var noteBase in removeList) {
+                noteBases.Remove(noteBase);
+            }
+        }
+
+        private void GameStart() {
+            Debug.Log("GameStart!");
+            isGameStart = true;
+            player.GameStart();
+            soundPlayer.GameStart(tempo);
+            //一小節ごとにノーツを生成
+            Observable.Interval(TimeSpan.FromSeconds(createInterval))
+                .Subscribe(_ => RandomCreate());
+        }
+
+        private void CheckHold(int index) {
+            if (noteBases.All(i => !i.CanHold || currentLane != i.LaneNo)) return;
+            var obj = noteBases.First(i => i.CanHold && i.LaneNo == currentLane);
+            player.Hold(obj, index);
+            noteBases.Remove(obj);
+            Destroy(obj.gameObject);
+        }
+
+        private void MoveLane(int num) {
+            currentLane = Mathf.Clamp(currentLane + num, 0, 3);
+            currentLaneObj.transform.position = startPositions[currentLane] + new Vector3(-15, 0, 0);
+        }
+
+        private void CreateNote() {
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
                 var obj = noteFactory.Create(ENoteType.Melody);
                 obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
@@ -74,28 +115,6 @@ namespace test {
                 obj.Init(basses[Random.Range(0, basses.Length)], barCount, tempo, border.transform.position, startPositions);
                 noteBases.Add(obj);
             }
-        }
-
-        private void GameStart() {
-            isGameStart = true;
-            player.GameStart();
-            soundPlayer.GameStart(tempo);
-            //一小節ごとにノーツを生成
-            Observable.Interval(TimeSpan.FromSeconds(60f / (tempo / 4f)))
-                .Subscribe(_ => RandomCreate());
-        }
-
-        private void CheckHold(int index) {
-            if (noteBases.All(i => !i.CanHold || currentLane != i.LaneNo)) return;
-            var obj = noteBases.First(i => i.CanHold && i.LaneNo == currentLane);
-            player.Hold(obj, index);
-            noteBases.Remove(obj);
-            Destroy(obj.gameObject);
-        }
-
-        private void Move(int num) {
-            currentLane = Mathf.Clamp(currentLane + num, 0, 3);
-            currentLaneObj.transform.position = startPositions[currentLane] + new Vector3(-15, 0, 0);
         }
 
         private void RandomCreate() {
