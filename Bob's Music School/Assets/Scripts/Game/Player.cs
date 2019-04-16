@@ -22,7 +22,7 @@ namespace Game {
         public IObservable<int> OnMoveButtonDown => onMoveButtonDown;
         public HoldNote[] HoldNotes => holdNotes;
         private bool isGameStart;
-        private float axisDeadLine = 0;
+        private float axisDeadLine = 0;//0-1の範囲
 
         private void Start() {
             holdNotesBacks = itemRoot.GetComponentsInChildren<Transform>()
@@ -43,20 +43,20 @@ namespace Game {
             if (Input.GetAxisRaw(EButtonName.Vertical.ToString()) < -axisDeadLine) onMoveButtonDown.OnNext(1);
 
             if (Input.GetAxisRaw(EButtonName.Horizontal.ToString()) > axisDeadLine) {
-                if (Input.GetButtonDown(EButtonName.A.ToString())) Mute(0);
+                if (Input.GetButtonDown(EButtonName.Y.ToString())) Mute(0);
                 if (Input.GetButtonDown(EButtonName.B.ToString())) Mute(1);
                 if (Input.GetButtonDown(EButtonName.X.ToString())) Mute(2);
-                if (Input.GetButtonDown(EButtonName.Y.ToString())) Mute(3);
+                if (Input.GetButtonDown(EButtonName.A.ToString())) Mute(3);
             } else if (Input.GetAxisRaw(EButtonName.Horizontal.ToString()) < -axisDeadLine) {
-                if (Input.GetButtonDown(EButtonName.A.ToString())) Delete(0);
+                if (Input.GetButtonDown(EButtonName.Y.ToString())) Delete(0);
                 if (Input.GetButtonDown(EButtonName.B.ToString())) Delete(1);
                 if (Input.GetButtonDown(EButtonName.X.ToString())) Delete(2);
-                if (Input.GetButtonDown(EButtonName.Y.ToString())) Delete(3);
+                if (Input.GetButtonDown(EButtonName.A.ToString())) Delete(3);
             } else {
-                if (Input.GetButtonDown(EButtonName.A.ToString())) onNotesButtonDown.OnNext(0);
+                if (Input.GetButtonDown(EButtonName.Y.ToString())) onNotesButtonDown.OnNext(0);
                 if (Input.GetButtonDown(EButtonName.B.ToString())) onNotesButtonDown.OnNext(1);
                 if (Input.GetButtonDown(EButtonName.X.ToString())) onNotesButtonDown.OnNext(2);
-                if (Input.GetButtonDown(EButtonName.Y.ToString())) onNotesButtonDown.OnNext(3);
+                if (Input.GetButtonDown(EButtonName.A.ToString())) onNotesButtonDown.OnNext(3);
             }
         }
 
