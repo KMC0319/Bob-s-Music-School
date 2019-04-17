@@ -28,7 +28,7 @@ namespace test {
         private bool isGameStart;
         private List<NoteBase> noteBases = new List<NoteBase>();
         private int currentLane;
-        private float createInterval => 60f / (tempo / 4f);
+        private float createInterval => 30f / (tempo / 4f);
         private float moveInterval = 0.15f;
 
         private void Awake() {
