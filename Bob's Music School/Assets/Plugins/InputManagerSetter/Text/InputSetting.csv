@@ -2,9 +2,11 @@ Horizontal,axis,X,left,right
 Horizontal,axis,6,,
 Vertical,axis,Y!,down,up
 Vertical,axis,7,,
-Y,Y,z,,
+A,A,z,,
 B,B,x,,
 X,X,c,,
-A,A,v,,
+Y,Y,v,,
+RB,joystick button 5,left shift,,
+RT,axis,3,left ctrl,,
 Submit,A,z,,
 Cancel,B,x,,

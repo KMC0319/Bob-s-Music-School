@@ -1,5 +1,5 @@
 namespace Game {
     public enum EButtonName {
-        Horizontal,Vertical,A,B,X,Y,Submit,Cancel
+        Horizontal,Vertical,A,B,X,Y,RB,RT,Submit,Cancel
     }
 }

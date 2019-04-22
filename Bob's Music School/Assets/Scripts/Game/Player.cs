@@ -17,17 +17,21 @@ namespace Game {
         private AudioSource[] audioSources;
         private SoundPlayer soundPlayer;
         private readonly Subject<int> onNotesButtonDown = new Subject<int>();
+        private readonly Subject<int> onSoundsButtonDown = new Subject<int>();
         private readonly Subject<int> onMoveButtonDown = new Subject<int>();
         public IObservable<int> OnNotesButtonDown => onNotesButtonDown;
+        public IObservable<int> OnSoundsButtonDown => onSoundsButtonDown;
         public IObservable<int> OnMoveButtonDown => onMoveButtonDown;
         public HoldNote[] HoldNotes => holdNotes;
         private bool isGameStart;
-        private float axisDeadLine = 0;//0-1の範囲
+        private float axisDeadLine = 0; //0-1の範囲
+        private Mode nowMode;
 
         private void Start() {
             holdNotesBacks = itemRoot.GetComponentsInChildren<Transform>()
                 .Skip(1)
-                .OrderBy(i => i.position.x)
+                .OrderBy(i => i.position.y)
+                .ThenByDescending(i => i.position.x)
                 .Select(i => i.gameObject)
                 .ToArray();
             audioSources = soundRoot.GetComponentsInChildren<AudioSource>()
@@ -43,20 +47,48 @@ namespace Game {
             if (Input.GetAxisRaw(EButtonName.Vertical.ToString()) < -axisDeadLine) onMoveButtonDown.OnNext(1);
 
             if (Input.GetAxisRaw(EButtonName.Horizontal.ToString()) > axisDeadLine) {
-                if (Input.GetButtonDown(EButtonName.Y.ToString())) Mute(0);
-                if (Input.GetButtonDown(EButtonName.B.ToString())) Mute(1);
-                if (Input.GetButtonDown(EButtonName.X.ToString())) Mute(2);
-                if (Input.GetButtonDown(EButtonName.A.ToString())) Mute(3);
+                nowMode = Mode.Mute;
             } else if (Input.GetAxisRaw(EButtonName.Horizontal.ToString()) < -axisDeadLine) {
-                if (Input.GetButtonDown(EButtonName.Y.ToString())) Delete(0);
-                if (Input.GetButtonDown(EButtonName.B.ToString())) Delete(1);
-                if (Input.GetButtonDown(EButtonName.X.ToString())) Delete(2);
-                if (Input.GetButtonDown(EButtonName.A.ToString())) Delete(3);
+                nowMode = Mode.Delete;
+            } else if (Input.GetButton(EButtonName.RB.ToString())) {
+                nowMode = Mode.RB;
+            } else if (Input.GetAxisRaw(EButtonName.RT.ToString()) < -axisDeadLine) {
+                nowMode = Mode.RT;
             } else {
-                if (Input.GetButtonDown(EButtonName.Y.ToString())) onNotesButtonDown.OnNext(0);
-                if (Input.GetButtonDown(EButtonName.B.ToString())) onNotesButtonDown.OnNext(1);
-                if (Input.GetButtonDown(EButtonName.X.ToString())) onNotesButtonDown.OnNext(2);
-                if (Input.GetButtonDown(EButtonName.A.ToString())) onNotesButtonDown.OnNext(3);
+                nowMode = Mode.Normal;
+            }
+
+            NoteButtonCheck(nowMode);
+        }
+
+        private void NoteButtonCheck(Mode mode) {
+            var num = -1;
+            if (Input.GetButtonDown(EButtonName.A.ToString())) num = 0;
+            if (Input.GetButtonDown(EButtonName.B.ToString())) num = 1;
+            if (Input.GetButtonDown(EButtonName.X.ToString())) num = 2;
+            if (Input.GetButtonDown(EButtonName.Y.ToString())) num = 3;
+
+            if (num == -1) return;
+
+            switch (mode) {
+                case Mode.Normal:
+                    onNotesButtonDown.OnNext(num);
+                    onSoundsButtonDown.OnNext(num);
+                    break;
+                case Mode.Mute:
+                    Mute(num);
+                    break;
+                case Mode.Delete:
+                    Delete(num);
+                    break;
+                case Mode.RB:
+                    onSoundsButtonDown.OnNext(num + 4);
+                    break;
+                case Mode.RT:
+                    onSoundsButtonDown.OnNext(num + 8);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
             }
         }
 
@@ -94,6 +126,14 @@ namespace Game {
 
         private void BarStart() {
             soundPlayer.SoundStart(holdNotes);
+        }
+
+        private enum Mode {
+            Normal,
+            Mute,
+            Delete,
+            RB,
+            RT
         }
     }
 }
