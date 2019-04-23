@@ -5,7 +5,7 @@ namespace Game {
         [SerializeField] private GameObject lineObject;
         [SerializeField] private FFTWindow fftWindow;
         private const int NumberOfSamples = 256;
-        private float[] samples = new float[NumberOfSamples * 8];
+        private float[] samples = new float[NumberOfSamples];
         private GameObject[] lines = new GameObject[NumberOfSamples];
 
         private void Start() {
