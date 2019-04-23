@@ -1293,6 +1293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineObject: {fileID: 1184784794202546, guid: 6385fe0bdedd9aa40a7faf64f560f12c, type: 2}
+  fftWindow: 5
 --- !u!1 &1573380537
 GameObject:
   m_ObjectHideFlags: 0
@@ -1974,7 +1975,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
