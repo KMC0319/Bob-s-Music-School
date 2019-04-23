@@ -74,7 +74,7 @@ namespace test {
 
         private void MoveLane(int num) {
             currentLane = Mathf.Clamp(currentLane + num, 0, 3);
-            currentLaneObj.transform.position = startPositions[currentLane] + new Vector3(-15, 0, 0);
+            currentLaneObj.transform.position = startPositions[currentLane] + new Vector3(-1750, 0, 0);
         }
 
         private void CreateNote() {
@@ -129,7 +129,7 @@ namespace test {
         private void RemoveNote() {
             var removeList = new List<NoteBase>();
             foreach (var noteBase in noteBases) {
-                if (noteBase.transform.position.x < -10) {
+                if (noteBase.transform.position.x < -1000) {
                     removeList.Add(noteBase);
                     Destroy(noteBase.gameObject);
                 }

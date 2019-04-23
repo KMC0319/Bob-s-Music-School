@@ -13,7 +13,6 @@ namespace Game {
         }
 
         private void PlaySound(int num) {
-            Debug.Log(num);
             if (player.HoldNotes[num % 4] != null) return;
             audioSource.PlayOneShot(sounds[num]);
         }
