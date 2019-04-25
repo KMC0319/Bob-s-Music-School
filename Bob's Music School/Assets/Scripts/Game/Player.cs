@@ -104,6 +104,7 @@ namespace Game {
             obj.transform.parent = holdNotesBacks[index].transform;
             //保持ノーツの形を流れていたノーツと合わせる
             obj.GetComponent<SpriteRenderer>().sprite = noteBase.GetComponent<SpriteRenderer>().sprite;
+            obj.GetComponent<SpriteRenderer>().color = noteBase.GetComponent<SpriteRenderer>().color;
             //スクリプトのアタッチ・初期化
             var script = obj.AddComponent<HoldNote>();
             script.Init(noteBase, audioSources[index]);

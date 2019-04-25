@@ -35,11 +35,12 @@ namespace Game {
             laneNo = Array.IndexOf(startPostions, transform.position);
         }*/
 
-        public void Init(SoundStatus soundStatus, int barCount, float tempo, Vector3 borderPosition, Vector3[] startPostions) {
+        public void Init(SoundStatus soundStatus, int barCount, float tempo, Vector3 borderPosition, Vector3[] startPositions) {
             SoundStatus = soundStatus;
             remainingTime = barCount * 60f / (tempo / 4f); //残り時間 ＝ 残り小節数 * 一小節の時間
             SetSpeed(borderPosition);
-            laneNo = Array.IndexOf(startPostions, transform.position - new Vector3(125, 0, 0));
+            laneNo = Array.IndexOf(startPositions, transform.position);
+            transform.position += new Vector3(125, 0, 0);
             allowableRange = 60f / (tempo / 4f) * 2;
         }
 
@@ -60,6 +61,6 @@ namespace Game {
             transform.position = new Vector3(transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
         }
 
-        public bool CanHold => -allowableRange <= remainingTime && remainingTime <= 1;
+        public bool CanHold => -allowableRange <= remainingTime && remainingTime <= 0;
     }
 }

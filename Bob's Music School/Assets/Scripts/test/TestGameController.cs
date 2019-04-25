@@ -122,8 +122,7 @@ namespace test {
             var clip = selectableClips[Random.Range(0, selectableClips.Length)];
             //生成・ランダム配置・セットアップ
             var obj = noteFactory.Create(type);
-            obj.transform.position = startPositions[Random.Range(0, startPositions.Length)]
-                                     + new Vector3(125, 0, 0);
+            obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
             obj.Init(clip, barCount, tempo, border.transform.position, startPositions);
             //現在存在しているノーツに追加
             noteBases.Add(obj);
