@@ -65,7 +65,9 @@ namespace test {
         }
 
         private void CheckHold(int index) {
+            Debug.Log("a");
             if (noteBases.All(i => !i.CanHold || currentLane != i.LaneNo)) return;
+            Debug.Log("i");
             var obj = noteBases.First(i => i.CanHold && i.LaneNo == currentLane);
             player.Hold(obj, index);
             noteBases.Remove(obj);
@@ -121,7 +123,7 @@ namespace test {
             //生成・ランダム配置・セットアップ
             var obj = noteFactory.Create(type);
             obj.transform.position = startPositions[Random.Range(0, startPositions.Length)]
-                                     + new Vector3(150, 0, 0);
+                                     + new Vector3(125, 0, 0);
             obj.Init(clip, barCount, tempo, border.transform.position, startPositions);
             //現在存在しているノーツに追加
             noteBases.Add(obj);
@@ -130,7 +132,7 @@ namespace test {
         private void RemoveNote() {
             var removeList = new List<NoteBase>();
             foreach (var noteBase in noteBases) {
-                if (noteBase.transform.position.x < -1000) {
+                if (noteBase.transform.position.x < -1250) {
                     removeList.Add(noteBase);
                     Destroy(noteBase.gameObject);
                 }

@@ -97,7 +97,6 @@ namespace Game {
         }
 
         public void Hold(NoteBase noteBase, int index) {
-            Debug.Log("a");
             //保持ノーツの生成
             var obj = Instantiate(holdObject,
                 holdNotesBacks[index].transform.position,

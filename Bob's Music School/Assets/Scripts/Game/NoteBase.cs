@@ -39,8 +39,8 @@ namespace Game {
             SoundStatus = soundStatus;
             remainingTime = barCount * 60f / (tempo / 4f); //残り時間 ＝ 残り小節数 * 一小節の時間
             SetSpeed(borderPosition);
-            laneNo = Array.IndexOf(startPostions, transform.position);
-            allowableRange = 60f / (tempo / 4f);
+            laneNo = Array.IndexOf(startPostions, transform.position - new Vector3(125, 0, 0));
+            allowableRange = 60f / (tempo / 4f) * 2;
         }
 
         /// <summary>
@@ -60,6 +60,6 @@ namespace Game {
             transform.position = new Vector3(transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
         }
 
-        public bool CanHold => -allowableRange <= remainingTime && remainingTime <= 0;
+        public bool CanHold => -allowableRange <= remainingTime && remainingTime <= 1;
     }
 }
