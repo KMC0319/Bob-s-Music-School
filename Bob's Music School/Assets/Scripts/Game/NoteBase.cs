@@ -25,7 +25,6 @@ namespace Game {
 
         private void Update() {
             if (isActive) Move();
-            Debug.Log(CanHold);
         }
         /*
         public void Init(SoundStatus soundStatus, float time, Vector3 borderPosition, Vector3[] startPostions) {

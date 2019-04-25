@@ -65,9 +65,7 @@ namespace test {
         }
 
         private void CheckHold(int index) {
-            Debug.Log("a");
             if (noteBases.All(i => !i.CanHold || currentLane != i.LaneNo)) return;
-            Debug.Log("i");
             var obj = noteBases.First(i => i.CanHold && i.LaneNo == currentLane);
             player.Hold(obj, index);
             noteBases.Remove(obj);
