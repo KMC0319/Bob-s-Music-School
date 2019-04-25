@@ -97,13 +97,14 @@ namespace Game {
         }
 
         public void Hold(NoteBase noteBase, int index) {
+            Debug.Log("a");
             //保持ノーツの生成
             var obj = Instantiate(holdObject,
                 holdNotesBacks[index].transform.position,
                 holdNotesBacks[index].transform.rotation);
             obj.transform.parent = holdNotesBacks[index].transform;
             //保持ノーツの形を流れていたノーツと合わせる
-            obj.GetComponent<MeshFilter>().mesh = noteBase.GetComponent<MeshFilter>().mesh;
+            obj.GetComponent<SpriteRenderer>().sprite = noteBase.GetComponent<SpriteRenderer>().sprite;
             //スクリプトのアタッチ・初期化
             var script = obj.AddComponent<HoldNote>();
             script.Init(noteBase, audioSources[index]);

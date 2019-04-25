@@ -74,7 +74,7 @@ namespace test {
 
         private void MoveLane(int num) {
             currentLane = Mathf.Clamp(currentLane + num, 0, 3);
-            currentLaneObj.transform.position = startPositions[currentLane] + new Vector3(-1750, 0, 0);
+            currentLaneObj.transform.position = startPositions[currentLane] + new Vector3(-1875, 0, 0);
         }
 
         private void CreateNote() {
@@ -120,7 +120,8 @@ namespace test {
             var clip = selectableClips[Random.Range(0, selectableClips.Length)];
             //生成・ランダム配置・セットアップ
             var obj = noteFactory.Create(type);
-            obj.transform.position = startPositions[Random.Range(0, startPositions.Length)];
+            obj.transform.position = startPositions[Random.Range(0, startPositions.Length)]
+                                     + new Vector3(150, 0, 0);
             obj.Init(clip, barCount, tempo, border.transform.position, startPositions);
             //現在存在しているノーツに追加
             noteBases.Add(obj);

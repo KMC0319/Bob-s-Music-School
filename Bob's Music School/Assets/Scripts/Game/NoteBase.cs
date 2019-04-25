@@ -13,7 +13,7 @@ namespace Game {
         [SerializeField] protected List<ENoteTag> tagList = new List<ENoteTag>();
         private float remainingTime;
         private float speed; //一秒で移動する距離
-        private readonly float allowableRange = 1f; //前後合わせた許容範囲
+        private float allowableRange = 1f; //前後合わせた許容範囲
         private bool isActive;
         private int laneNo;
 
@@ -25,20 +25,22 @@ namespace Game {
 
         private void Update() {
             if (isActive) Move();
+            Debug.Log(CanHold);
         }
-
+        /*
         public void Init(SoundStatus soundStatus, float time, Vector3 borderPosition, Vector3[] startPostions) {
             SoundStatus = soundStatus;
             remainingTime = time;
             SetSpeed(borderPosition);
             laneNo = Array.IndexOf(startPostions, transform.position);
-        }
+        }*/
 
         public void Init(SoundStatus soundStatus, int barCount, float tempo, Vector3 borderPosition, Vector3[] startPostions) {
             SoundStatus = soundStatus;
             remainingTime = barCount * 60f / (tempo / 4f); //残り時間 ＝ 残り小節数 * 一小節の時間
             SetSpeed(borderPosition);
             laneNo = Array.IndexOf(startPostions, transform.position);
+            allowableRange = 60f / (tempo / 4f);
         }
 
         /// <summary>
@@ -58,6 +60,6 @@ namespace Game {
             transform.position = new Vector3(transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
         }
 
-        public bool CanHold => -(allowableRange / 2f) <= remainingTime && remainingTime <= (allowableRange / 2f);
+        public bool CanHold => -allowableRange <= remainingTime && remainingTime <= 0;
     }
 }
