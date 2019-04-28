@@ -13,7 +13,10 @@ public class UiAnimationTest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-      
+
+        GameObject = GameObject.Find("UiAnimationTest2");
+
+        GameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
 
     }
 
