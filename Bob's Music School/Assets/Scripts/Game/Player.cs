@@ -122,7 +122,7 @@ namespace Game {
         private void Mute(int index) {
             if (holdNotes[index] == null) return;
             audioSources[index].mute = !audioSources[index].mute;
-            holdNotes[index].GetComponent<MeshRenderer>().material.color = audioSources[index].mute ? Color.yellow : Color.white;
+            holdNotes[index].GetComponent<SpriteRenderer>().material.color = audioSources[index].mute ? Color.yellow : Color.white;
         }
 
         private void BarStart() {
