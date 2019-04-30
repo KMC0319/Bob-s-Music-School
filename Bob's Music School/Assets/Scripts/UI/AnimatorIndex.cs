@@ -82,9 +82,9 @@ public class AnimatorIndex : MonoBehaviour {
             downInterval = -0.1f;
         }
 
-        if (Nowcursor < 0)
+        if (Nowcursor < -2)
         {
-            Nowcursor = 0;
+            Nowcursor = -2;
         }
         if (Nowcursor > 2)
         {
