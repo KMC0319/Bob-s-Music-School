@@ -26,10 +26,16 @@ public class AnimatorIndex : MonoBehaviour {
             animator.SetInteger("TitleIndex", 1);
             TitleIndex = 1;
 
-        }else if (TitleIndex == 1 && Input.GetButtonDown("A"))
+        }else if (TitleIndex == 1 && Nowcursor == 0&& Input.GetButtonDown("A"))
         {
             animator.SetInteger("TitleIndex", 2);
             TitleIndex = 2;
+
+        }
+        else if (TitleIndex == 1 && Nowcursor == 1 && Input.GetButtonDown("A"))
+        {
+            animator.SetInteger("TitleIndex", 3);
+            TitleIndex = 3;
 
         }
 
@@ -56,7 +62,6 @@ public class AnimatorIndex : MonoBehaviour {
                     Nowcursor++;
                 }
                   
-
 
                 upInterval = 0;
             }
@@ -85,8 +90,7 @@ public class AnimatorIndex : MonoBehaviour {
         if (Nowcursor < -2)
         {
             Nowcursor = -2;
-        }
-        if (Nowcursor > 2)
+        }else if (Nowcursor > 2)
         {
             Nowcursor = 2;
         }
