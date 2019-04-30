@@ -353,6 +353,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c148833f66308234e962d5c5e4154b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delaykey: 0.1
+  TitleIndex: 0
+  text: {fileID: 677960118}
 --- !u!1 &481066751
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,6 +583,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c148833f66308234e962d5c5e4154b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delaykey: 0.1
+  TitleIndex: 0
+  text: {fileID: 677960118}
 --- !u!1 &652265942
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +596,7 @@ GameObject:
   - component: {fileID: 652265943}
   - component: {fileID: 652265944}
   - component: {fileID: 652265945}
+  - component: {fileID: 652265946}
   m_Layer: 0
   m_Name: Title side L
   m_TagString: Untagged
@@ -674,6 +681,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &652265946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 652265942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c148833f66308234e962d5c5e4154b3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delaykey: 0.1
+  TitleIndex: 0
+  text: {fileID: 677960118}
 --- !u!1 &677960116
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,13 +777,13 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 677960116}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de05f97d1434bb44885704065321605c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   delaykey: 0.1
-  text: {fileID: 677960118}
+  text: {fileID: 0}
   flameCount: 0
   TitleIndex: 0
 --- !u!1 &1042081452
@@ -877,6 +898,7 @@ GameObject:
   - component: {fileID: 1581465815}
   - component: {fileID: 1581465816}
   - component: {fileID: 1581465817}
+  - component: {fileID: 1581465818}
   m_Layer: 0
   m_Name: Title side R
   m_TagString: Untagged
@@ -961,6 +983,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1581465818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1581465814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c148833f66308234e962d5c5e4154b3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delaykey: 0.1
+  TitleIndex: 0
+  text: {fileID: 677960118}
 --- !u!1 &1669957451
 GameObject:
   m_ObjectHideFlags: 0
