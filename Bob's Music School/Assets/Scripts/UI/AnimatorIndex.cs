@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AnimatorIndex : MonoBehaviour {
 
     Animator animator;
     private float upInterval;
     private float downInterval;
-    [SerializeField] private float delaykey = 0.1f;
+    [SerializeField] private float delaykey = 0.15f;
     private int Nowcursor;
     public int TitleIndex;
     public Text text;
@@ -30,12 +31,13 @@ public class AnimatorIndex : MonoBehaviour {
         {
             animator.SetInteger("TitleIndex", 2);
             TitleIndex = 2;
+            SceneManager.LoadScene("test");
 
         }
         else if (TitleIndex == 1 && Nowcursor == 1 && Input.GetButtonDown("A"))
         {
             animator.SetInteger("TitleIndex", 3);
-            TitleIndex = 3;
+           // TitleIndex = 3;
 
         }
 
