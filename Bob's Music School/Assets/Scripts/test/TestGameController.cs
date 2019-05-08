@@ -45,7 +45,7 @@ namespace test {
         }
 
         private void Update() {
-            if (!isGameStart && Input.GetKeyDown(KeyCode.Alpha0)) {
+            if (!isGameStart && Input.GetKeyDown(KeyCode.Alpha0)||Input.GetKeyDown(KeyCode.Joystick1Button7)) {
                 GameStart();
             }
 
