@@ -12,7 +12,7 @@ public class AnimatorIndex : MonoBehaviour {
     [SerializeField] private float delaykey = 0.15f;
     private int Nowcursor;
     public int TitleIndex;
-    public Text text;
+    //public Text text;
 
     // Use this for initialization
     void Start () {
@@ -115,7 +115,7 @@ public class AnimatorIndex : MonoBehaviour {
 
         animator.SetInteger("Nowcursor", Nowcursor);
 
-        text.text = "カーソル" + Nowcursor + "深度" + TitleIndex;
+       // text.text = "カーソル" + Nowcursor + "深度" + TitleIndex;
 
 
     }
