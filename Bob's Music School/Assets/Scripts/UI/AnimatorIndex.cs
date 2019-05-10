@@ -21,13 +21,13 @@ public class AnimatorIndex : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
         if (TitleIndex == 0 && Input.GetButtonDown("A"))
         {
             animator.SetInteger("TitleIndex", 1);
             TitleIndex = 1;
 
-        }else if (TitleIndex == 1 && Nowcursor == 0&& Input.GetButtonDown("A"))
+        } else if (TitleIndex == 1 && Nowcursor == 0 && Input.GetButtonDown("A"))
         {
             animator.SetInteger("TitleIndex", 2);
             TitleIndex = 2;
@@ -37,9 +37,10 @@ public class AnimatorIndex : MonoBehaviour {
         else if (TitleIndex == 1 && Nowcursor == 1 && Input.GetButtonDown("A"))
         {
             animator.SetInteger("TitleIndex", 3);
-           // TitleIndex = 3;
+            TitleIndex = 3;
 
         }
+      
 
         if (TitleIndex == 1 && Input.GetButtonDown("B"))
         {
@@ -48,22 +49,29 @@ public class AnimatorIndex : MonoBehaviour {
             Nowcursor = 0;
 
         }
+        else if (TitleIndex == 3 && Input.GetButtonDown("B"))
+        {
+            animator.SetInteger("TitleIndex", 1);
+            TitleIndex = 1;
+            Nowcursor = 1;
+
+        }
 
 
-            ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
 
-            if (Input.GetAxisRaw("Vertical") > 0)
+        if (Input.GetAxisRaw("Vertical") > 0)
         {
 
             if (upInterval == -0.1f) upInterval = delaykey * 0.9f;
             upInterval += Time.deltaTime;
             if (upInterval > delaykey)
             {
-                if (TitleIndex == 1)
+                if (TitleIndex == 1|| TitleIndex == 3)
                 {
                     Nowcursor++;
                 }
-                  
+
 
                 upInterval = 0;
             }
@@ -76,7 +84,7 @@ public class AnimatorIndex : MonoBehaviour {
             upInterval = 0;
             if (downInterval > delaykey)
             {
-                if (TitleIndex == 1)
+                if (TitleIndex == 1||TitleIndex == 3)
                 {
                     Nowcursor--;
                 }
@@ -89,10 +97,18 @@ public class AnimatorIndex : MonoBehaviour {
             downInterval = -0.1f;
         }
 
-        if (Nowcursor < -2)
+        if(3 == TitleIndex && Nowcursor < -6)
+        { 
+                Nowcursor = -6;
+        }
+        else if (3 == TitleIndex && Nowcursor > 1)
+        {
+            Nowcursor = 1;
+        }
+        else if (1 == TitleIndex && Nowcursor < -2)
         {
             Nowcursor = -2;
-        }else if (Nowcursor > 2)
+        }else if (1 == TitleIndex && Nowcursor > 2)
         {
             Nowcursor = 2;
         }
