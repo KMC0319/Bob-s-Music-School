@@ -5,6 +5,7 @@ using Game;
 using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 namespace test {
     /// <summary>
@@ -45,9 +46,10 @@ namespace test {
         }
 
         private void Update() {
-            if (!isGameStart && Input.GetKeyDown(KeyCode.Alpha0)||Input.GetKeyDown(KeyCode.Joystick1Button7)) {
+            if (!isGameStart && Input.GetKeyDown(KeyCode.Alpha0)|| !isGameStart && Input.GetKeyDown(KeyCode.Joystick1Button7)) {
                 GameStart();
             }
+            if (Input.GetKeyDown(KeyCode.Joystick1Button6)) { SceneManager.LoadScene("Title"); }
 
             if (!isGameStart) return;
             CreateNote();
