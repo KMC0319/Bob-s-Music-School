@@ -9,10 +9,10 @@ public class AnimatorIndex : MonoBehaviour {
     Animator animator;
     private float upInterval;
     private float downInterval;
-    [SerializeField] private float delaykey = 0.15f;
+    private float delaykey = 0.18f;
     private int Nowcursor;
     public int TitleIndex;
-    //public Text text;
+   // public Text text;
 
     // Use this for initialization
     void Start () {
