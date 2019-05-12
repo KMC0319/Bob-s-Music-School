@@ -45,10 +45,15 @@ namespace test {
             };
         }
 
+        private void Start()
+        {
+            Observable.NextFrame().Subscribe(_ => GameStart());
+        }
+
         private void Update() {
-            if (!isGameStart && Input.GetKeyDown(KeyCode.Alpha0)|| !isGameStart && Input.GetKeyDown(KeyCode.Joystick1Button7)) {
-                GameStart();
-            }
+            //if (!isGameStart && Input.GetKeyDown(KeyCode.Alpha0)|| !isGameStart && Input.GetKeyDown(KeyCode.Joystick1Button7)) {
+            //    GameStart();
+            //}
             if (Input.GetKeyDown(KeyCode.Joystick1Button6)) { SceneManager.LoadScene("Title"); }
 
             if (!isGameStart) return;
@@ -63,7 +68,7 @@ namespace test {
             soundPlayer.GameStart(tempo);
             //一小節ごとにノーツを生成
             Observable.Interval(TimeSpan.FromSeconds(createInterval))
-                .Subscribe(_ => RandomCreate());
+                .Subscribe(_ => RandomCreate()).AddTo(gameObject);
         }
 
         private void CheckHold(int index) {
